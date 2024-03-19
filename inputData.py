@@ -42,6 +42,7 @@ class MoneyTracker:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
+
                     data = line.split(',')
                     if data[0] == str(date):
                         exists = True
@@ -110,3 +111,4 @@ class MoneyTracker:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
+
