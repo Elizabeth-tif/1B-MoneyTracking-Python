@@ -1,3 +1,18 @@
+import datetime
+import selectFile
+
+#Sebuah function untuk input date yang valid
+def get_valid_date_input(prompt):
+    while True:
+        date_str = input(prompt)
+        try:
+            # Attempt to parse the input string into a date object
+            date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+            return date_obj
+        except ValueError:
+            # If parsing fails, inform the user and prompt again
+            print("Invalid date format. Please enter date in YYYY-MM-DD and valid date format.")
+
 #class moneyTracker
 class MoneyTracker:
     def __init__(self):
@@ -27,7 +42,8 @@ class MoneyTracker:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
-                    data = line.strip().split(',')
+
+                    data = line.split(',')
                     if data[0] == str(date):
                         exists = True
                         new_amount = float(data[1]) + amount
@@ -63,3 +79,36 @@ class MoneyTracker:
                 return 'transportasi'
             else:
                 print("Invalid choice. Please select a valid category.")
+    #sebuah function untuk update file transaction.csv berdasarkan hasil import file
+    def updateTransaction(self):
+        file_path = selectFile.select_file_and_read()
+        if file_path:
+            print("Selected file:", file_path)
+            try:
+                # Open the selected file for reading
+                with open(file_path, 'r') as file:
+                    # Read the contents of the file
+                    file_content = file.read()
+                # Split the content by line
+                lines = file_content.strip().split('\n')
+                for line in lines:
+                    # Split the line by comma and check if it contains all expected values
+                    data = line.strip().split(',')
+                    if len(data) == 5:  # Ensure the line has all expected values
+                        transaction = {
+                            'type': data[0],
+                            'date': data[1],
+                            'amount': data[2],
+                            'category': data[3],
+                            'notes': data[4]
+                        }
+                        with open('transaction.csv','a') as append_file:
+                            append_file.write(f"{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
+                    else:
+                        print("file has to include all transaction elements : type,date,amount,category,notes")
+
+            except Exception as e:
+                print("Error reading the file:", e)
+        else:
+            print("No file selected.")
+
