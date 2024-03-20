@@ -15,11 +15,6 @@ def main():
     user = auth.login(False)
     
     while True:
-        # Start tkinter's main loop
-        root = tkinter.Tk()
-        root.withdraw()
-        root.update()
-
         print("\nMoney Tracking App")
         print("1. Add Income")
         print("2. Add Expense")
@@ -42,7 +37,10 @@ def main():
         elif choice == '3':
             print("display")
         elif choice == '4':
+            root.deiconify()
             tracker.updateTransaction()  # Call the function from inputData.py
+            root.withdraw()
+            root.update()
         elif choice == '5':
             break
         else:
