@@ -1,5 +1,6 @@
 import datetime
 import selectFile
+import csv
 
 #Sebuah function untuk input date yang valid
 def get_valid_date_input(prompt):
@@ -30,7 +31,10 @@ class MoneyTracker:
             'notes': notes
         }
         self.transactions.append(transaction)
+        self.saveToFile(transaction)
         
+    def saveToFile(self, object):
+        transaction = object
         #append transaction ke file transaction.csv
         with open("transaction.csv","a") as file:
             file.write(f"{transaction['name']},{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
@@ -39,15 +43,15 @@ class MoneyTracker:
         exists = False
         # menggunakan try-except untuk handle error jika file tidak ditemukan
         try:
-            with open("income.csv" if transaction_type == 'Income' else "outcome.csv", "r+") as file:
+            with open("income.csv" if transaction['type'] == 'Income' else "outcome.csv", "r+") as file:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
                     data = line.split(',')
-                    if data[0] == str(date):
+                    if data[0] == transaction['name'] and data[1] == (transaction['date']):
                         exists = True
-                        new_amount = float(data[1]) + amount
-                        line = f"{data[0]},{new_amount}\n"
+                        new_amount = float(data[2]) + transaction['amount']
+                        line = f"{data[0]},{data[1]},{new_amount}\n"
                     file.write(line)
 
         except FileNotFoundError:
@@ -55,8 +59,8 @@ class MoneyTracker:
 
         # Jika transaksi dengan date sama tidak ditemukan, maka append ke file income/outcome
         if not exists:
-            with open("income.csv" if transaction_type == 'Income' else "outcome.csv", "a") as file:
-                file.write(f"{transaction['date']},{transaction['amount']}\n")
+            with open("income.csv" if transaction['type'] == 'Income' else "outcome.csv", "a") as file:
+                file.write(f"{transaction['name']},{transaction['date']},{transaction['amount']}\n")
 
     # Fungsi dibawah ini untuk memilih kategori untuk outcome 
     def categoryPicking(self):
@@ -86,29 +90,31 @@ class MoneyTracker:
         if file_path:
             print("Selected file:", file_path)
             try:
-                # Open the selected file for reading
+                # Buka file yang dipilih untuk dibaca
                 with open(file_path, 'r') as file:
-                    # Read the contents of the file
+                    # Baca konten atau isi dari file
                     file_content = file.read()
-                # Split the content by line
+                # Split konten menjadi baris baris
                 lines = file_content.strip().split('\n')
                 for line in lines:
-                    # Split the line by comma and check if it contains all expected values
+                    # Split baris dengan koma dan pengecekan apakah dalam 1 baris memiliki semua value yang diminta
                     data = line.strip().split(',')
-                    if len(data) == 5:  # Ensure the line has all expected values
+                    if len(data) == 6:  # Mengecek barisnya memiliki semua value yang diminta
                         transaction = {
-                            'type': data[0],
-                            'date': data[1],
-                            'amount': data[2],
-                            'category': data[3],
-                            'notes': data[4]
+                            'name': data[0],
+                            'type': data[1],
+                            'date': data[2],
+                            'amount': float(data[3]),
+                            'category': data[4],
+                            'notes': data[5]
                         }
-                        with open('transaction.csv','a') as append_file:
-                            append_file.write(f"{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
+                        self.saveToFile(transaction)
                     else:
-                        print("file has to include all transaction elements : type,date,amount,category,notes")
+                        print("file has to include all transaction elements : name,type,date,amount,category,notes")
 
             except Exception as e:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
+    def dailyRecap(self):
+        data = []
