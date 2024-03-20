@@ -1,8 +1,19 @@
 import inputData
+import User
+import tkinter
 
 # main driver
 def main():
+    auth = User.User()
     tracker = inputData.MoneyTracker()
+
+    # Start tkinter's main loop
+    root = tkinter.Tk()
+    root.withdraw()
+    root.update()
+    
+    user = auth.login(False)
+    
     while True:
         print("\nMoney Tracking App")
         print("1. Add Income")
@@ -16,13 +27,13 @@ def main():
             amount = float(input("Enter income amount: "))
             date = inputData.get_valid_date_input("Enter a date (YYYY-MM-DD): ")
             notes = input("Enter the notes (leave - if no notes):")
-            tracker.add_transaction(amount, 'Income', 'Income', date, notes)
+            tracker.add_transaction(user, amount, 'Income', 'Income', date, notes)
         elif choice == '2':
             amount = float(input("Enter expense amount: "))
             date = inputData.get_valid_date_input("Enter a date (YYYY-MM-DD): ")
             category = tracker.categoryPicking()
-            notes = input("Enter the notes (leave - if no notes):")
-            tracker.add_transaction(amount, 'Expense', category, date, notes)
+            notes = input("Enter the notes (leave - if no notes): ")
+            tracker.add_transaction(user, amount, 'Expense', category, date, notes)
         elif choice == '3':
             print("display")
         elif choice == '4':
