@@ -42,16 +42,17 @@ class User:
                 loggedIn = self.check_user(username, password)
                 if loggedIn:
                     print('Logged in successfully!')
-                    return username
                 else:
                     username = self.login(True)
-                    return username
             elif option == 'n':
                 self.signup(False)
+                username = self.login(False)
             else:
                 exit()
         else:
             self.signup(False)
+            username = self.login(False)
+        return username
 
     # Fungsi untuk signup
     def signup(self, error):
