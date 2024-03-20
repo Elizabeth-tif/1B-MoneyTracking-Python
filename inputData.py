@@ -18,10 +18,11 @@ class MoneyTracker:
     def __init__(self):
         self.transactions = []
     #Sebuah method untuk menambahkan transaksi baru, baik income atau outcome
-    def add_transaction(self, amount, transaction_type, category, date, notes):
+    def add_transaction(self, name, amount, transaction_type, category, date, notes):
         if date is None:
             date = datetime.date.today()
         transaction = {
+            'name': name,
             'amount': amount,
             'type': transaction_type,
             'category': category,
@@ -32,7 +33,7 @@ class MoneyTracker:
         
         #append transaction ke file transaction.csv
         with open("transaction.csv","a") as file:
-            file.write(f"{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
+            file.write(f"{transaction['name']},{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
 
         #Variable untuk mengecek apakah suatu date sudah ada di income.csv atau outcome.csv
         exists = False
@@ -42,7 +43,6 @@ class MoneyTracker:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
-
                     data = line.split(',')
                     if data[0] == str(date):
                         exists = True
@@ -58,7 +58,7 @@ class MoneyTracker:
             with open("income.csv" if transaction_type == 'Income' else "outcome.csv", "a") as file:
                 file.write(f"{transaction['date']},{transaction['amount']}\n")
 
-    #Fungsi dibawah ini untuk memilih kategori untuk outcome 
+    # Fungsi dibawah ini untuk memilih kategori untuk outcome 
     def categoryPicking(self):
         print("Expenses Category\n(1) Gadget\n(2) Kebutuhan Pokok\n(3) Hiburan\n(4) Kesehatan\n(5) Makanan & Minuman\n(6) Pendidikan\n(7) Transportasi")
         while True:
@@ -79,6 +79,7 @@ class MoneyTracker:
                 return 'transportasi'
             else:
                 print("Invalid choice. Please select a valid category.")
+
     #sebuah function untuk update file transaction.csv berdasarkan hasil import file
     def updateTransaction(self):
         file_path = selectFile.select_file_and_read()
@@ -111,4 +112,3 @@ class MoneyTracker:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
-
