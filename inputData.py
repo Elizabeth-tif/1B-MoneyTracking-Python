@@ -116,3 +116,11 @@ class MoneyTracker:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
+    #function untuk make sure membuat file agar menghindari error di beberapa function/prosedur lain
+    def createFile(self):
+        with open('income.csv','a') as file:
+            pass
+        with open('outcome.csv','a') as file:
+            pass
+        with open('transaction.csv','a') as file:
+            pass
