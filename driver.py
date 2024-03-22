@@ -1,6 +1,7 @@
 import inputData
 import User
 import Recap_UI
+import TransactionHistory_UI
 import tkinter
 import os
 
@@ -23,8 +24,9 @@ def main():
         print("1. Input Income")
         print("2. Input Outcome")
         print("3. Recap")
-        print("4. Load Dari File")
-        print("5. Quit")
+        print("4. Transaction History")
+        print("5. Load Dari File")
+        print("6. Quit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -41,11 +43,13 @@ def main():
         elif choice == '3':
             Recap_UI.recap(user)
         elif choice == '4':
+            TransactionHistory_UI.histori(user)
+        elif choice == '5':
             root.deiconify()
             tracker.updateTransaction()  # Call the function from inputData.py
             root.withdraw()
             root.update()
-        elif choice == '5':
+        elif choice == '6':
             break
         else:
             print("Invalid choice. Please try again.")
