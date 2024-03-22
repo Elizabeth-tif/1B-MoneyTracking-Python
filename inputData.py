@@ -116,5 +116,3 @@ class MoneyTracker:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
-    def dailyRecap(self):
-        data = []
