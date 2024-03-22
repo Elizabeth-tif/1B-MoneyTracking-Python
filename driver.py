@@ -12,7 +12,7 @@ def main():
     root.withdraw()
     root.update()
     
-    user = auth.login(False)
+    user = auth.login(False,False)
     
     while True:
         print("\nMoney Tracking App")
