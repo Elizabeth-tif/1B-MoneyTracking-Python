@@ -18,11 +18,10 @@ class MoneyTracker:
     def __init__(self):
         self.transactions = []
     #Sebuah method untuk menambahkan transaksi baru, baik income atau outcome
-    def add_transaction(self, name, amount, transaction_type, category, date, notes):
+    def add_transaction(self, user, amount, transaction_type, category, date, notes):
         if date is None:
             date = datetime.date.today()
         transaction = {
-            'name': name,
             'amount': amount,
             'type': transaction_type,
             'category': category,
@@ -30,29 +29,28 @@ class MoneyTracker:
             'notes': notes
         }
         self.transactions.append(transaction)
-        self.saveToFile(transaction)
+        self.saveToFile(transaction, user)
         
-    def saveToFile(self, object):
+    def saveToFile(self, object, user):
         transaction = object
         #append transaction ke file transaction.csv
-        with open("transaction.csv","a") as file:
-            file.write(f"{transaction['name']},{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
+        with open(user+"_transaction.csv","a") as file:
+            file.write(f"{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
 
         #Variable untuk mengecek apakah suatu date sudah ada di income.csv atau outcome.csv
         exists = False
         # menggunakan try-except untuk handle error jika file tidak ditemukan
         try:
-            with open("income.csv" if transaction['type'] == 'Income' else "outcome.csv", "r+") as file:
+            with open(user+"_income.csv" if transaction['type'] == 'Income' else user+"_outcome.csv", "r+") as file:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
                     data = line.split(',')
-                    date_obj = datetime.datetime.strptime(data[1], '%Y-%m-%d').date()
-                    if data[0] == transaction['name'] and date_obj == (transaction['date']):
-                        print("check3")
+                    date_obj = datetime.datetime.strptime(data[0], '%Y-%m-%d').date()
+                    if  date_obj == (transaction['date']):
                         exists = True
-                        new_amount = float(data[2]) + transaction['amount']
-                        line = f"{data[0]},{data[1]},{new_amount}\n"
+                        new_amount = float(data[1]) + transaction['amount']
+                        line = f"{data[0]},{new_amount}\n"
                     file.write(line)
 
         except FileNotFoundError:
@@ -60,8 +58,8 @@ class MoneyTracker:
 
         # Jika transaksi dengan date sama tidak ditemukan, maka append ke file income/outcome
         if not exists:
-            with open("income.csv" if transaction['type'] == 'Income' else "outcome.csv", "a") as file:
-                file.write(f"{transaction['name']},{transaction['date']},{transaction['amount']}\n")
+            with open(user+"_income.csv" if transaction['type'] == 'Income' else user+"_outcome.csv", "a") as file:
+                file.write(f"{transaction['date']},{transaction['amount']}\n")
 
     # Fungsi dibawah ini untuk memilih kategori untuk outcome 
     def categoryPicking(self):
@@ -86,7 +84,7 @@ class MoneyTracker:
                 print("Invalid choice. Please select a valid category.")
 
     #sebuah function untuk update file transaction.csv berdasarkan hasil import file
-    def updateTransaction(self):
+    def updateTransaction(self, user):
         file_path = selectFile.select_file_and_read()
         if file_path:
             print("Selected file:", file_path)
@@ -100,28 +98,27 @@ class MoneyTracker:
                 for line in lines:
                     # Split baris dengan koma dan pengecekan apakah dalam 1 baris memiliki semua value yang diminta
                     data = line.strip().split(',')
-                    if len(data) == 6:  # Mengecek barisnya memiliki semua value yang diminta
+                    if len(data) == 5:  # Mengecek barisnya memiliki semua value yang diminta
                         transaction = {
-                            'name': data[0],
-                            'type': data[1],
-                            'date': data[2],
-                            'amount': float(data[3]),
-                            'category': data[4],
-                            'notes': data[5]
+                            'type': data[0],
+                            'date': datetime.datetime.strptime(data[1], '%Y-%m-%d').date(),
+                            'amount': float(data[2]),
+                            'category': data[3],
+                            'notes': data[4]
                         }
-                        self.saveToFile(transaction)
+                        self.saveToFile(transaction, user)
                     else:
-                        print("file has to include all transaction elements : name,type,date,amount,category,notes")
+                        print("file has to include all transaction elements : type,date,amount,category,notes")
 
             except Exception as e:
                 print("Error reading the file:", e)
         else:
             print("No file selected.")
     #function untuk make sure membuat file agar menghindari error di beberapa function/prosedur lain
-    def createFile(self):
-        with open('income.csv','a') as file:
+    def createFile(self, user):
+        with open(user+'_income.csv','a') as file:
             pass
-        with open('outcome.csv','a') as file:
+        with open(user+'_outcome.csv','a') as file:
             pass
-        with open('transaction.csv','a') as file:
+        with open(user+'_transaction.csv','a') as file:
             pass

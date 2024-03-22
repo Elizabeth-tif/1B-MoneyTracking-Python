@@ -9,7 +9,6 @@ import os
 def main():
     auth = User.User()
     tracker = inputData.MoneyTracker()
-    tracker.createFile()
 
     # Start tkinter's main loop
     root = tkinter.Tk()
@@ -17,10 +16,11 @@ def main():
     root.update()
     
     user = auth.login(False)
+    tracker.createFile(user)
     
     while True:
-        os.system('cls')
         print("\nMoney Tracking App")
+        print("Selamat datang, ",user,"!")
         print("1. Input Income")
         print("2. Input Outcome")
         print("3. Recap")
@@ -46,7 +46,7 @@ def main():
             TransactionHistory_UI.histori(user)
         elif choice == '5':
             root.deiconify()
-            tracker.updateTransaction()  # Call the function from inputData.py
+            tracker.updateTransaction(user)  # Call the function from inputData.py
             root.withdraw()
             root.update()
         elif choice == '6':
