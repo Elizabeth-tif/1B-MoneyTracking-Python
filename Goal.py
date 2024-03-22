@@ -1,4 +1,6 @@
 import datetime
+import os
+import msvcrt
 
 class Goal:
     def __init__(self, money_tracker):
@@ -66,52 +68,81 @@ class Target(Goal):
         filled_progress, remaining_space, progress_percentage = self.calculate_progress(difference, self.amount)
         self.print_progress("Target", filled_progress, remaining_space, progress_percentage)
 
-# Example usage
 class MoneyTracker:
     def __init__(self):
-        # Simulating transaction data
-        self.transactions = [
-            {'date': datetime.date(2024, 3, 15), 'type': 'outcome', 'category': 'Groceries', 'amount': 50},
-            {'date': datetime.date(2024, 3, 18), 'type': 'outcome', 'category': 'Shopping', 'amount': 100},
-            {'date': datetime.date(2024, 3, 20), 'type': 'income', 'category': 'Salary', 'amount': 2000},
-            {'date': datetime.date(2024, 3, 22), 'type': 'outcome', 'category': 'Transport', 'amount': 30},
-            {'date': datetime.date(2024, 3, 25), 'type': 'outcome', 'category': 'Groceries', 'amount': 40}
-        ]
+        self.transactions = []  # Placeholder for transaction data
 
-money_tracker = MoneyTracker()
+class BudgetTracker:
+    def __init__(self):
+        self.money_tracker = MoneyTracker()
+        self.budget_categories = ['Gadget', 'Kebutuhan Pokok', 'Hiburan', 'Kesehatan', 'Makanan & Minuman', 'Pendidikan', 'Transportasi']
+        self.budgets = self._initialize_budgets()
+        self.target_year = None
+        self.target_month = None
 
-# User input for budget category and amount
-budget_categories = ['Gadget', 'Kebutuhan Pokok', 'Hiburan', 'Kesehatan', 'Makanan & Minuman', 'Pendidikan', 'Transportasi']
-print("Available budget categories:")
-for i, category in enumerate(budget_categories, start=1):
-    print(f"{i}. {category}")
+    def _initialize_budgets(self):
+        budgets = {}
+        for category in self.budget_categories:
+            budget = Budget(self.money_tracker, category, 0)
+            budgets[category] = budget
+        return budgets
 
-# Initialize Budget objects with default values
-budgets = {category: Budget(money_tracker, category, 0) for category in budget_categories}
+    def _print_budgets_progress(self):
+        for category, budget in self.budgets.items():
+            print(f"{category} budget progress:")
+            budget.set_goal()
 
-budget_choice = int(input("Enter the number corresponding to the budget category: "))
-selected_category = budget_categories[budget_choice - 1]
+    def set_budget(self):
+        print("Available budget categories:")
+        for i, category in enumerate(self.budget_categories, start=1):
+            print(f"{i}. {category}")
 
-budget_amount = float(input("Enter the budget amount: "))
-budget = Budget(money_tracker, selected_category, budget_amount)
+        budget_choice = int(input("Enter the number corresponding to the budget category: "))
+        selected_category = self.budget_categories[budget_choice - 1]
+        budget_amount = float(input("Enter the budget amount: "))
 
-# Assign the created Budget object to the corresponding variable based on the selected category
-budgets[selected_category] = budget
+        budget = Budget(self.money_tracker, selected_category, budget_amount)
+        self.budgets[selected_category] = budget
 
-# Creating Budget objects
-for budget_category, budget_obj in budgets.items():
-    print(f"{budget_category} budget progress:")
-    budget_obj.set_goal()
+    def set_target(self):
+        target_year_amount = float(input("Enter the yearly target amount: "))
+        self.target_year = Target(self.money_tracker, datetime.date.today(), target_year_amount)
+        self.target_month = Target(self.money_tracker, datetime.date.today(), target_year_amount / 12)
 
-# User input for target amount
-target_year_amount = float(input("Enter the yearly target amount: "))
+    def show_budget_and_target(self):
+        print("Budgets:")
+        self._print_budgets_progress()
 
-# Creating Target objects for yearly and monthly goals
-target_year = Target(money_tracker, datetime.date.today(), target_year_amount)
-target_month = Target(money_tracker, datetime.date.today(), target_year_amount / 12)
+        if self.target_year and self.target_month:
+            print("\nYearly target progress:")
+            self.target_year.set_goal()
+            print("Monthly target progress:")
+            self.target_month.set_goal()
+        else:
+            print("\nTargets are not set.")
+        msvcrt.getch()
 
-# Setting goals for yearly and monthly targets
-print("Yearly target progress:")
-target_year.set_goal()
-print("Monthly target progress:")
-target_month.set_goal()
+    def start_budget_tracker(self):
+        while True:
+            os.system('cls')
+            print("\nOptions:")
+            print("1. Set budget")
+            print("2. Set target")
+            print("3. Show budget and target")
+            print("4. Back to main menu")
+
+            choice = int(input("Enter your choice: "))
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if choice == 1:
+                self.set_budget()
+            elif choice == 2:
+                self.set_target()
+            elif choice == 3:
+                self.show_budget_and_target()
+            elif choice == 4:
+                return
+            else:
+                print("Invalid choice. Please enter a valid option.")
+
+budget_tracker = BudgetTracker()
+budget_tracker.start_budget_tracker()

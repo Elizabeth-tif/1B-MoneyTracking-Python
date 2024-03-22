@@ -3,6 +3,7 @@ import User
 import Recap_UI
 import tkinter
 import os
+import goal
 
 # main driver
 def main():
@@ -23,7 +24,8 @@ def main():
         print("2. Input Outcome")
         print("3. Recap")
         print("4. Load Dari File")
-        print("5. Quit")
+        print("5. Input Budget & Target")
+        print("6. Quit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -45,6 +47,9 @@ def main():
             root.withdraw()
             root.update()
         elif choice == '5':
+            budget_tracker = goal.BudgetTracker()
+            budget_tracker.start_budget_tracker()
+        elif choice == '6':
             break
         else:
             print("Invalid choice. Please try again.")
