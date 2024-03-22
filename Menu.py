@@ -1,5 +1,6 @@
 import os
 from User import *
+import Balances
 
 auth = User()
 
@@ -8,6 +9,7 @@ class Menu:
         pass
     
     def showMenu(self,username,errorInput):
+        balances = Balances.Balances()
         os.system('cls' if os.name == 'nt' else 'clear')
         print("======================== MONEY TRACKING APP ========================")
         print("============================== MENU ================================")
@@ -18,7 +20,7 @@ class Menu:
         print('====================================================================')
         option = input("Your Input :")
         if option == '1':
-            pass
+            balances.showBalancesMenu(False,username)
         elif option == '2':
             pass
         elif option == '3':
