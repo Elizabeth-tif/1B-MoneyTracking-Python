@@ -1,6 +1,5 @@
 import datetime
 import selectFile
-import csv
 
 #Sebuah function untuk input date yang valid
 def get_valid_date_input(prompt):
@@ -48,7 +47,9 @@ class MoneyTracker:
                 file.seek(0)
                 for line in lines:
                     data = line.split(',')
-                    if data[0] == transaction['name'] and data[1] == (transaction['date']):
+                    date_obj = datetime.datetime.strptime(data[1], '%Y-%m-%d').date()
+                    if data[0] == transaction['name'] and date_obj == (transaction['date']):
+                        print("check3")
                         exists = True
                         new_amount = float(data[2]) + transaction['amount']
                         line = f"{data[0]},{data[1]},{new_amount}\n"

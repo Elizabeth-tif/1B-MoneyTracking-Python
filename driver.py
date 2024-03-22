@@ -8,6 +8,7 @@ import os
 def main():
     auth = User.User()
     tracker = inputData.MoneyTracker()
+    tracker.createFile()
 
     # Start tkinter's main loop
     root = tkinter.Tk()
