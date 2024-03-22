@@ -1,11 +1,15 @@
 import inputData
 import User
+import Recap_UI
+import TransactionHistory_UI
 import tkinter
+import os
 
 # main driver
 def main():
     auth = User.User()
     tracker = inputData.MoneyTracker()
+    tracker.createFile()
 
     # Start tkinter's main loop
     root = tkinter.Tk()
@@ -15,12 +19,14 @@ def main():
     user = auth.login(False,False)
     
     while True:
+        os.system('cls')
         print("\nMoney Tracking App")
-        print("1. Add Income")
-        print("2. Add Expense")
-        print("3. Display Transactions")
-        print("4. Load From File")
-        print("5. Quit")
+        print("1. Input Income")
+        print("2. Input Outcome")
+        print("3. Recap")
+        print("4. Transaction History")
+        print("5. Load Dari File")
+        print("6. Quit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -35,13 +41,15 @@ def main():
             notes = input("Enter the notes (leave - if no notes): ")
             tracker.add_transaction(user, amount, 'Expense', category, date, notes)
         elif choice == '3':
-            print("display")
+            Recap_UI.recap(user)
         elif choice == '4':
+            TransactionHistory_UI.histori(user)
+        elif choice == '5':
             root.deiconify()
             tracker.updateTransaction()  # Call the function from inputData.py
             root.withdraw()
             root.update()
-        elif choice == '5':
+        elif choice == '6':
             break
         else:
             print("Invalid choice. Please try again.")
