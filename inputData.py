@@ -67,7 +67,7 @@ class MoneyTracker:
         while True:
             choice = input("Select expenses category:")
             if choice == '1':
-                return 'gadget'
+                return 'Gadget'
             elif choice == '2':
                 return 'Kebutuhan Pokok'
             elif choice == '3':
@@ -79,7 +79,7 @@ class MoneyTracker:
             elif choice == '6':
                 return 'Pendidikan'
             elif choice == '7':
-                return 'transportasi'
+                return 'Transportasi'
             else:
                 print("Invalid choice. Please select a valid category.")
 

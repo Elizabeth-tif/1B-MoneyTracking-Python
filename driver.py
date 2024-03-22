@@ -4,6 +4,7 @@ import Recap_UI
 import TransactionHistory_UI
 import tkinter
 import os
+import goal
 
 # main driver
 def main():
@@ -19,6 +20,7 @@ def main():
     tracker.createFile(user)
     
     while True:
+        os.system('cls')
         print("\nMoney Tracking App")
         print("Selamat datang, ",user,"!")
         print("1. Input Income")
@@ -26,7 +28,8 @@ def main():
         print("3. Recap")
         print("4. Transaction History")
         print("5. Load Dari File")
-        print("6. Quit")
+        print("6. Budget & Target")
+        print("7. Quit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -50,6 +53,9 @@ def main():
             root.withdraw()
             root.update()
         elif choice == '6':
+            budget_tracker = goal.BudgetTracker(user)
+            budget_tracker.start_budget_tracker()
+        elif choice == '7':
             break
         else:
             print("Invalid choice. Please try again.")
