@@ -24,48 +24,64 @@ class User:
         return False
 
     # Fungsi untuk login, apabila berhasil akan mengembalikan username
-    def login(self, error):
+    def login(self, errorAuth, errorInput):
         os.system('cls' if os.name == 'nt' else 'clear')
         print('======================== MONEY TRACKING APP ========================')
         print('============================= SIGN IN ==============================')
-
-        if error:
-            print('Username or Password is incorrect. Please try again.\n')
+        if errorInput:
+            print('!! Your input is not valid. Please try again. !!\n')
+        if errorAuth:
+            print('!! Username or Password is incorrect. Please try again. !!\n')
         
         if self.check_file():
-            option = input('Have an account? (y/n)(0 to exit): ')
+            option = input('Have an account? (y/n): ')
 
             if option == 'y':
                 username = input('Enter your username: ')
                 password = input('Enter your password: ')
+                print ("1. Submit\n2. Exit")
                 print('====================================================================')
-                loggedIn = self.check_user(username, password)
+                option = input("Your Input :")
+                if option == '1':
+                    loggedIn = self.check_user(username, password)
+                elif option == '2':
+                    exit()
+                else:
+                    self.login(False,True)
                 if loggedIn:
                     print('Logged in successfully!')
                 else:
-                    username = self.login(True)
+                    username = self.login(True,False)
             elif option == 'n':
-                self.signup(False)
-                username = self.login(False)
+                self.signup(False,False)
+                username = self.login(False,False)
             else:
-                exit()
+                self.login(False,True)
         else:
-            self.signup(False)
-            username = self.login(False)
+            self.signup(False,False)
+            username = self.login(False,False)
         return username
 
     # Fungsi untuk signup
-    def signup(self, error):
+    def signup(self, errorAuth, errorInput):
         os.system('cls' if os.name == 'nt' else 'clear')
         print('======================== MONEY TRACKING APP ========================')
         print('============================= SIGN UP ==============================')    
-
-        if error:
-            print('Username already exists!\n')
+        if errorInput:
+            print('!! Your input is not valid. Please try again. !!\n')
+        if errorAuth:
+            print('!! Username already exists !!\n')
+        
         username = input('Enter your username: ')
         password = input('Enter your password: ')
+        print ("1. Submit\n2. Back")
         print('====================================================================')
-        self.add_user(username, password)
+        option = input("Your Input :")
+        if option == '1':
+            self.add_user(username, password)
+        elif (option!= '2' or option!='1'):
+            self.signup(False,True)
+        
 
     # Fungsi untuk menambahkan user baru ke dalam file
     def add_user(self, username, password):
@@ -74,14 +90,14 @@ class User:
             'password': password
         }
 
-        try:    
+        try:
             # Check if username already exists
             with open('users.csv', 'r') as file:
                 lines = file.readlines()
                 for line in lines:
                     data = line.strip().split(',')
                     if data[0] == username:
-                        self.signup(True)
+                        self.signup(True,False)
                         return
             
             print('users.csv found. Appending new user...')
