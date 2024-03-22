@@ -25,14 +25,17 @@ def recap(user):
 def daily(user):
     inMonth=1
     inYear=1
+    wrong = False
     while(int(inMonth)>0 and int(inYear)>0):
         os.system('cls')
         print("======================== MONEY TRACKING APP ========================")
         print("============================ DAILY RECAP ===========================")
+        if(wrong):
+            print("Tolong input bulan dan tahun yang valid!")
         inMonth = int(input("Input Bulan (1-12) :"))
         inYear = int(input("Input tahun: "))
-        if(inMonth<0 or inYear<0):
-            print("Tolong input bulan dan tahun yang valid!")
+        if((inMonth<0 or inMonth>12) or inYear<0):
+            wrong=True
         else:
             break
     rekap.dailyRecap(user, inMonth, inYear)
