@@ -3,7 +3,6 @@ from Auth import *
 import Balances
 import Recap_UI
 import TransactionHistory_UI
-import tkinter
 import os
 import goal
 import inputData
@@ -14,16 +13,12 @@ class Menu:
     def __init__(self) -> None:
         pass
     
-    def showMenu(self,username,errorInput):
+    def showMenu(self,username,errorInput,root):
         balances = Balances.Balances()
         # Start tkinter's main loop
         tracker = inputData.MoneyTracker()
         tracker.createFile(username)
         inputData.check_install_tabulate()
-        
-        root = tkinter.Tk()
-        root.withdraw()
-        root.update()
 
         while True:
             os.system('cls' if os.name == 'nt' else 'clear')
