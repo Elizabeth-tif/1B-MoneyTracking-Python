@@ -1,6 +1,7 @@
 import datetime
 import csv
 from tabulate import tabulate
+from asciichartpy import plot
 
 #class recap :
 class recap:
@@ -13,34 +14,30 @@ class recap:
         months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
 
         # Membaca data dari income.csv
-        with open('income.csv', 'r') as csvfile:
+        with open(user+'_income.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:           #untuk setiap baris dalam file
-                name = row[0].strip()
-                if name == user:          #pengecekan apakah namanya sama
-                    date_obj = datetime.datetime.strptime(row[1], '%Y-%m-%d').date()    #parsing dari string menjadi date type
-                    obj = {
-                        'date' : date_obj,
-                        'amount' : float(row[2])    #parse string to float
-                    }
-                    income.append(obj)  #push object ke array income
+                date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()    #parsing dari string menjadi date type
+                obj = {
+                    'date' : date_obj,
+                    'amount' : float(row[1])    #parse string to float
+                }
+                income.append(obj)  #push object ke array income
                     
-                    if date_obj not in uniqueDate and date_obj.month == bulan and date_obj.year == tahun:
-                        uniqueDate.append(date_obj)
+                if date_obj not in uniqueDate and date_obj.month == bulan and date_obj.year == tahun:
+                    uniqueDate.append(date_obj)
         
-        with open('outcome.csv', 'r') as csvfile:
+        with open(user+'_outcome.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:       #untuk setiap baris dalam file
-                name = row[0].strip()
-                if name == user:      #pengecekan apakah namanya sama
-                    date_obj = datetime.datetime.strptime(row[1], '%Y-%m-%d').date()
-                    obj = {
-                        'date' : date_obj,
-                        'amount' : float(row[2])
-                    }
-                    outcome.append(obj)     #push object ke array outcome
-                    if date_obj not in uniqueDate and date_obj.month == bulan and date_obj.year == tahun:
-                        uniqueDate.append(date_obj)
+                date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()
+                obj = {
+                    'date' : date_obj,
+                    'amount' : float(row[1])
+                }
+                outcome.append(obj)     #push object ke array outcome
+                if date_obj not in uniqueDate and date_obj.month == bulan and date_obj.year == tahun:
+                    uniqueDate.append(date_obj)
         #sort uniqueDate
         uniqueDate.sort()
         # Sort array income dan outcome by date
