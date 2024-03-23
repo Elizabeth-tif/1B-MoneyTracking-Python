@@ -1,5 +1,5 @@
 import inputData
-import User
+import Auth
 import Recap_UI
 import TransactionHistory_UI
 import tkinter
@@ -8,7 +8,7 @@ import goal
 
 # main driver
 def main():
-    auth = User.User()
+    auth = Auth.User()
     tracker = inputData.MoneyTracker()
 
     # Start tkinter's main loop

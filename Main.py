@@ -1,7 +1,7 @@
-from User import *
+from Auth import *
 from Menu import *
 
-auth = User()
+auth = Auth()
 menu = Menu()
 
 name = auth.login(False,False)

@@ -63,3 +63,76 @@ class recap:
             # mengkonversi recap_data menjadi format table dengan tabulate
             table = tabulate(recap_data, headers="keys", tablefmt="pretty")
             print(table)
+
+    def weeklyRecap(self, user, tahun):
+        income = []
+        outcome = []
+        uniqueWeek = []
+        recap_data = []
+        with open('income.csv', 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                name = row[0].strip()
+                if name == user:
+                    isoDate = datetime.datetime.strptime(row[1], '%Y-%m-%d').date().isocalendar()
+                    obj = {
+                        'week' : isoDate.week,
+                        'amount' : float(row[2])
+                    }
+                    income.append(obj)
+
+                    if isoDate.week not in uniqueWeek and isoDate.year == tahun:
+                        uniqueWeek.append(isoDate.week)
+
+        with open('outcome.csv', 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                name = row[0].strip()
+                if name == user:
+                    isoDate = datetime.datetime.strptime(row[1], '%Y-%m-%d').date().isocalendar()
+                    obj = {
+                        'week' : isoDate.week,
+                        'amount' : float(row[2])
+                    }
+                    outcome.append(obj)
+
+                    if isoDate.week not in uniqueWeek and isoDate.year == tahun:
+                        uniqueWeek.append(isoDate.week)
+        
+        uniqueWeek.sort()
+        income = sorted(income, key=lambda x: x["week"])
+        outcome = sorted(outcome, key=lambda x: x["week"])
+
+        for week in uniqueWeek:
+            startOfWeek, endOfWeek = recap.getWeekRange(tahun, week)
+            weekRange = f"{startOfWeek} - {endOfWeek}"
+            income_amount = sum(item['amount'] for item in income if item['week'] == week)
+            outcome_amount = sum(item['amount'] for item in outcome if item['week'] == week)
+            total_amount = income_amount - outcome_amount
+            recap_data.append({'week': week, 'date': weekRange, 'income': income_amount, 'outcome': outcome_amount, 'total': total_amount})
+
+        print("\nRekap Mingguan di Tahun",tahun)
+        if not recap_data:
+            message_table = tabulate([["Tidak ada data transaksi pada tahun ini"]], tablefmt="pretty")
+            print(message_table)
+        else:
+            table = tabulate(recap_data, headers="keys", tablefmt="pretty")
+            print(table)
+        
+    def getWeekRange(year, week):
+        # Find the first day of the year
+        firstDay = datetime.datetime(year, 1, 1)
+
+        # Calculate the start of the week
+        # startOfYear = firstDay - datetime.timedelta(days = firstDay.weekday())
+        startOfWeek = firstDay + datetime.timedelta(weeks = week - 1)
+
+        # Calculate the end of the week
+        if week == 1:
+            endOfWeek = startOfWeek + datetime.timedelta(days = 6 - startOfWeek.weekday())
+        elif week == 53:
+            endOfWeek = datetime.datetime(year, 12, 31)
+        else:
+            endOfWeek = startOfWeek + datetime.timedelta(days = 6)
+
+        return startOfWeek.date(), endOfWeek.date()
