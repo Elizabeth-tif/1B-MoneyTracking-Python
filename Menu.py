@@ -1,5 +1,5 @@
 import os
-from User import *
+from Auth import *
 import Balances
 import Recap_UI
 import TransactionHistory_UI
@@ -8,7 +8,7 @@ import os
 import goal
 import inputData
 
-auth = User()
+auth = Auth()
 
 class Menu:
     def __init__(self) -> None:
@@ -18,6 +18,7 @@ class Menu:
         balances = Balances.Balances()
         # Start tkinter's main loop
         tracker = inputData.MoneyTracker()
+        tracker.createFile(username)
         root = tkinter.Tk()
         root.withdraw()
         root.update()

@@ -139,7 +139,7 @@ class Balances:
         print("Your Expanses (this Month)\t: -Rp. "+ self.getThisMonthOutcome(username))
         print("Your Expanses (last Month)\t: -Rp. "+ self.getLastMonthOutcome(username))
         print("Your Income (this Month)\t: +Rp. "+ self.getThisMonthIncome(username))
-        print("Your Income (lasr Month)\t: +Rp. "+ self.getLastMonthIncome(username))
+        print("Your Income (last Month)\t: +Rp. "+ self.getLastMonthIncome(username))
         print("1. Input Income\n2. Input Expanse\n3. Back")
         print("====================================================================")
         option = input("Your Input :")

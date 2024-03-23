@@ -54,7 +54,7 @@ def weekly(user):
             print("Tolong input tahun yang valid!")
         else:
             break
-    print('rekap mingguan') #ubah dengan method rekap mingguan
+    rekap.weeklyRecap(user, inYear)
     inUser = input('Melihat recap weekly lainnya? (y untuk yes, yang lain untuk tidak) = ')
     if(inUser=='y'):
         weekly(user)
