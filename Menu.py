@@ -19,6 +19,8 @@ class Menu:
         # Start tkinter's main loop
         tracker = inputData.MoneyTracker()
         tracker.createFile(username)
+        inputData.check_install_tabulate()
+        
         root = tkinter.Tk()
         root.withdraw()
         root.update()
