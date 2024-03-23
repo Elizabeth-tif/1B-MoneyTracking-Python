@@ -9,4 +9,4 @@ def histori(user):
     print("======================= TRANSACTION  HISTORY =======================")
     history.TransHist(user)
     print("====================================================================")
-    input("Back?(y/n) :")
+    input("input anything to go back :")

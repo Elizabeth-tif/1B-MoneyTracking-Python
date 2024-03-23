@@ -69,35 +69,33 @@ class recap:
         outcome = []
         uniqueWeek = []
         recap_data = []
-        with open('income.csv', 'r') as csvfile:
+        with open(user+'_income.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 name = row[0].strip()
-                if name == user:
-                    isoDate = datetime.datetime.strptime(row[1], '%Y-%m-%d').date().isocalendar()
-                    obj = {
-                        'week' : isoDate.week,
-                        'amount' : float(row[2])
-                    }
-                    income.append(obj)
+                isoDate = datetime.datetime.strptime(row[0], '%Y-%m-%d').date().isocalendar()
+                obj = {
+                    'week' : isoDate.week,
+                    'amount' : float(row[1])
+                }
+                income.append(obj)
 
-                    if isoDate.week not in uniqueWeek and isoDate.year == tahun:
-                        uniqueWeek.append(isoDate.week)
+                if isoDate.week not in uniqueWeek and isoDate.year == tahun:
+                    uniqueWeek.append(isoDate.week)
 
-        with open('outcome.csv', 'r') as csvfile:
+        with open(user+'_outcome.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 name = row[0].strip()
-                if name == user:
-                    isoDate = datetime.datetime.strptime(row[1], '%Y-%m-%d').date().isocalendar()
-                    obj = {
-                        'week' : isoDate.week,
-                        'amount' : float(row[2])
-                    }
-                    outcome.append(obj)
+                isoDate = datetime.datetime.strptime(row[0], '%Y-%m-%d').date().isocalendar()
+                obj = {
+                    'week' : isoDate.week,
+                    'amount' : float(row[1])
+                }
+                outcome.append(obj)
 
-                    if isoDate.week not in uniqueWeek and isoDate.year == tahun:
-                        uniqueWeek.append(isoDate.week)
+                if isoDate.week not in uniqueWeek and isoDate.year == tahun:
+                    uniqueWeek.append(isoDate.week)
         
         uniqueWeek.sort()
         income = sorted(income, key=lambda x: x["week"])

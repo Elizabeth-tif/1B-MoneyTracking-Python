@@ -31,10 +31,10 @@ def daily(user):
         print("======================== MONEY TRACKING APP ========================")
         print("============================ DAILY RECAP ===========================")
         if(wrong):
-            print("Tolong input bulan dan tahun yang valid!")
+            print("Tolong input bulan dan tahun yang valid! (tahun 2020-2024)")
         inMonth = int(input("Input Bulan (1-12) :"))
         inYear = int(input("Input tahun: "))
-        if((inMonth<0 or inMonth>12) or inYear<0):
+        if((inMonth<0 or inMonth>12) or inYear<2020 or inYear>2024):
             wrong=True
         else:
             break
@@ -45,13 +45,16 @@ def daily(user):
 
 def weekly(user):
     inYear = 1
+    wrong = False
     while(int(inYear)>0):
         os.system('cls')
         print("======================== MONEY TRACKING APP ========================")
         print("=========================== WEEKLY RECAP ===========================")
+        if(wrong == True):
+            print("Tolong input tahun dari range 2020-2024!")
         inYear = int(input("Input tahun: "))
-        if(inYear<0):
-            print("Tolong input tahun yang valid!")
+        if(inYear<2020 or inYear>2024):
+            wrong = True
         else:
             break
     rekap.weeklyRecap(user, inYear)
@@ -61,13 +64,16 @@ def weekly(user):
 
 def monthly(user):
     inYear = 1
+    wrong = False
     while(int(inYear)>0):
         os.system('cls')
         print("======================== MONEY TRACKING APP ========================")
         print("=========================== MONTHLY RECAP ==========================")
+        if(wrong == True):
+            print("Tolong input tahun dari range 2020-2024!")
         inYear = int(input("Input tahun: "))
-        if(inYear<0):
-            print("Tolong input tahun yang valid!")
+        if(inYear<2020 or inYear>2024):
+            wrong = True
         else:
             break
     print('rekap bulanan') #ubah dengan method rekap bulanan

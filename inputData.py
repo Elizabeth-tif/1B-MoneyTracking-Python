@@ -1,5 +1,7 @@
 import datetime
 import selectFile
+import importlib
+import subprocess
 
 #Sebuah function untuk input date yang valid
 def get_valid_date_input(prompt):
@@ -8,10 +10,22 @@ def get_valid_date_input(prompt):
         try:
             # Attempt to parse the input string into a date object
             date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
-            return date_obj
+            date_now = datetime.date.today()
+            if(date_obj.year<2020 or date_obj>date_now):
+                print('Tolong masukkan tanggal minimum 2020-1-1 dan maximum',date_now)
+            else:
+                return date_obj
         except ValueError:
             # If parsing fails, inform the user and prompt again
             print("Invalid date format. Please enter date in YYYY-MM-DD and valid date format.")
+
+#a function to automatically install tabulate library, so it won't show any error
+def check_install_tabulate():
+    try:
+        importlib.import_module('tabulate')
+    except ImportError:
+        subprocess.check_call(['pip', 'install', 'tabulate'])
+check_install_tabulate()
 
 #class moneyTracker
 class MoneyTracker:
