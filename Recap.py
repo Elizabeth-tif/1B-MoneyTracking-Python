@@ -1,6 +1,7 @@
 import datetime
 import csv
 from tabulate import tabulate
+from asciichartpy import plot
 
 #class recap :
 class recap:

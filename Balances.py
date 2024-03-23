@@ -8,29 +8,27 @@ class Balances:
         pass
 
     def getCurrentBalance(self,name):
-        incomeFile = open("income.csv","r")
+        incomeFile = open(name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
-        outcomeFile = open("outcome.csv","r")
+        outcomeFile = open(name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
         currentBalance=0
         i = 0
         while (i<len(incomes)):
             income = incomes[i].split(',')
-            if (income[0]==name):
-                currentBalance = currentBalance + float(income[2])
+            currentBalance = currentBalance + float(income[1])
             i=i+1
         i = 0
         while (i<len(outcomes)):
             outcome = outcomes[i].split(',')
-            if (outcome[0]==name):
-                currentBalance = currentBalance - float(outcome[2])
+            currentBalance = currentBalance - float(outcome[1])
             i=i+1
         return str(currentBalance)
 
     def getThisMonthIncome(self,name):
-        incomeFile = open("income.csv","r")
+        incomeFile = open(name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
 
@@ -43,16 +41,16 @@ class Balances:
         i = 0
         while (i<len(incomes)):
             income = incomes[i].split(',')
-            dates = income[1].split('-')
+            dates = income[0].split('-')
             year = dates[0]
             month = dates[1]
-            if (year==nowYear and month==nowMonth and income[0]==name):
-                thisMonthIncome = thisMonthIncome + float(income[2])
+            if (year==nowYear and month==nowMonth):
+                thisMonthIncome = thisMonthIncome + float(income[1])
             i=i+1
         return str(thisMonthIncome)
     
     def getLastMonthIncome(self,name):
-        incomeFile = open("income.csv","r")
+        incomeFile = open(name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
 
@@ -71,16 +69,16 @@ class Balances:
         i = 0
         while (i<len(incomes)):
             income = incomes[i].split(',')
-            dates = income[1].split('-')
+            dates = income[0].split('-')
             year = int(dates[0])
             month = int(dates[1])
-            if (year==lastYear and month==lastMonth and income[0]==name):
-                lastMonthIncome = lastMonthIncome + float(income[2])
+            if (year==lastYear and month==lastMonth):
+                lastMonthIncome = lastMonthIncome + float(income[1])
             i=i+1
         return str(lastMonthIncome)
     
     def getThisMonthOutcome(self,name):
-        outcomeFile = open("outcome.csv","r")
+        outcomeFile = open(name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
 
@@ -93,16 +91,16 @@ class Balances:
         i = 0
         while (i<len(outcomes)):
             outcome = outcomes[i].split(',')
-            dates = outcome[1].split('-')
+            dates = outcome[0].split('-')
             year = dates[0]
             month = dates[1]
-            if (year==nowYear and month==nowMonth and outcome[0]==name):
-                thisMonthOutcome = thisMonthOutcome + float(outcome[2])
+            if (year==nowYear and month==nowMonth):
+                thisMonthOutcome = thisMonthOutcome + float(outcome[1])
             i=i+1
         return str(thisMonthOutcome)
     
     def getLastMonthOutcome(self,name):
-        outcomeFile = open("outcome.csv","r")
+        outcomeFile = open(name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
 
@@ -121,11 +119,11 @@ class Balances:
         i = 0
         while (i<len(outcomes)):
             outcome = outcomes[i].split(',')
-            dates = outcome[1].split('-')
+            dates = outcome[0].split('-')
             year = int(dates[0])
             month = int(dates[1])
-            if (year==lastYear and month==lastMonth and outcome[0]==name):
-                lastMonthOutcome = lastMonthOutcome + float(outcome[2])
+            if (year==lastYear and month==lastMonth):
+                lastMonthOutcome = lastMonthOutcome + float(outcome[1])
             i=i+1
         return str(lastMonthOutcome)
 
