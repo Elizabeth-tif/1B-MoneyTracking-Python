@@ -12,7 +12,7 @@ def balancesUi(eCond,inUser):
     print("Your Expenses (this Month)\t:"+expansesThisM)
     print("Your Expenses (lasr Month)\t:"+expansesLastM)
     print("Your Income (this Month)\t:"+incomeThisM)
-    print("Your Income (lasr Month)\t:"+incomeLastM)
+    print("Your Income (last Month)\t:"+incomeLastM)
     print("====================================================================")
     inUser = input("\nInput :")
 
@@ -30,7 +30,7 @@ def inputIncome(eCond,inUser):
 
 def inputOutcome(eCond,inUser):
     print("======================== MONEY TRACKING APP ========================")
-    print("========================== INPUT EXPANSE ===========================")
+    print("========================== INPUT EXPENSE ===========================")
     if (eCond==True) :
         print("!! Input tidak valid, silahkan melakukan input ulang !!")
     income = input("Income\t\t:")

@@ -177,7 +177,7 @@ class Balances:
         tracker = inputData.MoneyTracker()
         os.system('cls' if os.name == 'nt' else 'clear')
         print("======================== MONEY TRACKING APP ========================")
-        print("========================== INPUT EXPANSE ===========================")
+        print("========================== INPUT EXPENSE ===========================")
         if errorInput:
             print('!! Your input is not valid. Please try again. !!\n')
         amount = float(input("Enter expense amount: "))

@@ -187,6 +187,8 @@ class BudgetTracker:
             budget.set_goal()
 
     def set_budget(self):
+            print("======================== MONEY TRACKING APP ========================")
+            print("=========================== BUDGET LIMIT ===========================")
             print("Available budget categories:")
             for i, category in enumerate(self.budget_categories, start=1):
                 print(f"{i}. {category}")
@@ -196,38 +198,43 @@ class BudgetTracker:
                 selected_category = self.budget_categories[budget_choice - 1]
                 budget_amount = float(input("Enter the budget amount: "))
             except (ValueError, IndexError):
-                print("Invalid input. Please enter a valid number.")
+                print("!! Input tidak valid, silahkan melakukan input ulang !!")
                 return
 
             self.budgets[selected_category] = Budget(self.month_tracker, self.year_tracker,selected_category, budget_amount)
 
     def set_target(self):
+        print("======================== MONEY TRACKING APP ========================")
+        print("============================== TARGET ==============================")        
         try:
             target_year_amount = float(input("Enter the yearly target amount: "))
         except ValueError:
-            print("Invalid input. Please enter a valid number.")
+            print("!! Input tidak valid, silahkan melakukan input ulang !!")
             return
 
         self.target_year = Target(self.month_tracker, self.year_tracker, datetime.date.today(), target_year_amount)
         self.target_month = Target(self.month_tracker, self.year_tracker, datetime.date.today(), target_year_amount / 12)
 
     def show_budget_and_target(self):
-        print("Budgets:")
+        print("======================== MONEY TRACKING APP ========================")
+        print("========================= BUDGET PROGRESS ==========================")
         self._print_budgets_progress()
-
+        print("\n========================= TARGET PROGRESS ==========================")
         if self.target_year and self.target_month:
-            print("\nYearly target progress:")
+            print("Yearly target progress:")
             self.target_year.set_goal()
-            print("\nMonthly target progress:")
+            print("Monthly target progress:")
             self.target_month.set_goalM()
         else:
-            print("\nTargets are not set.")
+            print("Targets are not set.")
         msvcrt.getch()
 
     def start_budget_tracker(self):
         while True:
             os.system('cls')
-            print("\nOptions:")
+            print("======================== MONEY TRACKING APP ========================")
+            print("========================== BUDGET & TARGET =========================")
+            print("Options:")
             print("1. Set budget")
             print("2. Set target")
             print("3. Show budget and target")
@@ -244,4 +251,6 @@ class BudgetTracker:
             elif choice == 4:
                 return
             else:
-                print("Invalid choice. Please enter a valid option.")
+                print("!! Input tidak valid, silahkan melakukan input ulang !!")
+                msvcrt.getch()
+                
