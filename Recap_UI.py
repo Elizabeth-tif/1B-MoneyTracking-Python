@@ -76,7 +76,7 @@ def monthly(user):
             wrong = True
         else:
             break
-    print('rekap bulanan') #ubah dengan method rekap bulanan
+    rekap.monthlyRecap(user, inYear)
     inUser = input('Melihat recap weekly lainnya? (y untuk yes, yang lain untuk tidak) = ')
     if(inUser=='y'):
         monthly(user)
