@@ -135,7 +135,7 @@ class recap:
 
         return startOfWeek.date(), endOfWeek.date()
     
-    def monthRecap(self, user, tahun):
+    def monthlyRecap(self, user, tahun):
         #deklarasi array
         uniqueMonth = []
         income = []
