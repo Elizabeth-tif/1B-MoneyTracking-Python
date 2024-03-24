@@ -6,11 +6,18 @@ class Auth:
 
     # Mengecek apakah file users.csv sudah dibuat atau belum
     def check_file(self):
-        try:
-            open('./Storage/users.csv', 'r')
-            return True
-        except FileNotFoundError:
-            return False
+        with open('./Storage/users.csv', 'r') as file:
+            lines = file.readlines()
+            if len(lines) == 0:
+                # Tidak ada User
+                return False
+            else:
+                return True
+        # try:
+        #     open('./Storage/users.csv', 'r')
+        #     return True
+        # except FileNotFoundError:
+        #     return False
         
     # Fungsi tambahan untuk login. Mengecek apakah username 
     # dan password sesuai dengan yang ada di file users.csv

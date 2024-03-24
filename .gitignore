@@ -1,5 +1,6 @@
 # ignore ALL .csv files
 *.csv
+!users.csv
 
 # ignore ALL files in ANY directory named pycache
 __pycache__/
