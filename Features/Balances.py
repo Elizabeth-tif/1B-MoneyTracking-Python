@@ -1,17 +1,17 @@
 import os
 from datetime import date
-import inputData
-import Menu
+import Features.inputData as inputData
+import Features.Menu as Menu
 
 class Balances:
     def __init__(self) -> None:
         pass
 
     def getCurrentBalance(self,name):
-        incomeFile = open(name+"_income.csv","r")
+        incomeFile = open('./Storage/'+name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
-        outcomeFile = open(name+"_outcome.csv","r")
+        outcomeFile = open('./Storage/'+name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
         currentBalance=0
@@ -28,7 +28,7 @@ class Balances:
         return str(currentBalance)
 
     def getThisMonthIncome(self,name):
-        incomeFile = open(name+"_income.csv","r")
+        incomeFile = open('./Storage/'+name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
 
@@ -50,7 +50,7 @@ class Balances:
         return str(thisMonthIncome)
     
     def getLastMonthIncome(self,name):
-        incomeFile = open(name+"_income.csv","r")
+        incomeFile = open('./Storage/'+name+"_income.csv","r")
         incomes = incomeFile.readlines()
         incomeFile.close
 
@@ -78,7 +78,7 @@ class Balances:
         return str(lastMonthIncome)
     
     def getThisMonthOutcome(self,name):
-        outcomeFile = open(name+"_outcome.csv","r")
+        outcomeFile = open('./Storage/'+name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
 
@@ -100,7 +100,7 @@ class Balances:
         return str(thisMonthOutcome)
     
     def getLastMonthOutcome(self,name):
-        outcomeFile = open(name+"_outcome.csv","r")
+        outcomeFile = open('./Storage/'+name+"_outcome.csv","r")
         outcomes = outcomeFile.readlines()
         outcomeFile.close
 

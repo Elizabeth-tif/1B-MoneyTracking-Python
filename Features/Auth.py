@@ -7,7 +7,7 @@ class Auth:
     # Mengecek apakah file users.csv sudah dibuat atau belum
     def check_file(self):
         try:
-            open('users.csv', 'r')
+            open('./Storage/users.csv', 'r')
             return True
         except FileNotFoundError:
             return False
@@ -15,7 +15,7 @@ class Auth:
     # Fungsi tambahan untuk login. Mengecek apakah username 
     # dan password sesuai dengan yang ada di file users.csv
     def check_user(self, username, password):
-        with open('users.csv', 'r') as file:
+        with open('./Storage/users.csv', 'r') as file:
             lines = file.readlines()
             for line in lines:
                 data = line.strip().split(',')
@@ -47,7 +47,7 @@ class Auth:
                 elif option == '2':
                     exit()
                 else:
-                    self.login(False,True)
+                    username = self.login(False,True)
                 if loggedIn:
                     print('Logged in successfully!')
                 else:
@@ -56,7 +56,7 @@ class Auth:
                 self.signup(False,False)
                 username = self.login(False,False)
             else:
-                self.login(False,True)
+                username = self.login(False,True)
         else:
             self.signup(False,False)
             username = self.login(False,False)
@@ -92,7 +92,7 @@ class Auth:
 
         try:
             # Check if username already exists
-            with open('users.csv', 'r') as file:
+            with open('./Storage/users.csv', 'r') as file:
                 lines = file.readlines()
                 for line in lines:
                     data = line.strip().split(',')
@@ -103,11 +103,11 @@ class Auth:
             print('users.csv found. Appending new user...')
             # Append users to list and file
             self.users.append(user)
-            with open('users.csv', 'a') as file:
+            with open('./Storage/users.csv', 'a') as file:
                 file.write(f'{username},{password}\n')
         except FileNotFoundError:
             print('users.csv not found. Creating new file...')
             # Append users to list and file
             self.users.append(user)
-            with open('users.csv', 'a') as file:
+            with open('./Storage/users.csv', 'a') as file:
                 file.write(f'{username},{password}\n')

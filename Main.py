@@ -1,5 +1,5 @@
-from Auth import *
-from Menu import *
+from Features.Auth import *
+from Features.Menu import *
 import tkinter
 
 auth = Auth()

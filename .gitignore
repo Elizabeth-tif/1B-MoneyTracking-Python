@@ -3,3 +3,6 @@
 
 # ignore ALL files in ANY directory named pycache
 __pycache__/
+
+# ignore tempCodeRunnerFile.py
+tempCodeRunnerFile.py

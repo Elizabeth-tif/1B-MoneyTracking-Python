@@ -14,7 +14,7 @@ class recap:
         months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
 
         # Membaca data dari income.csv
-        with open(user+'_income.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_income.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:           #untuk setiap baris dalam file
                 date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()    #parsing dari string menjadi date type
@@ -27,7 +27,7 @@ class recap:
                 if date_obj not in uniqueDate and date_obj.month == bulan and date_obj.year == tahun:
                     uniqueDate.append(date_obj)
         
-        with open(user+'_outcome.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_outcome.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:       #untuk setiap baris dalam file
                 date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()
@@ -69,7 +69,7 @@ class recap:
         outcome = []
         uniqueWeek = []
         recap_data = []
-        with open(user+'_income.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_income.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 name = row[0].strip()
@@ -83,7 +83,7 @@ class recap:
                 if isoDate.week not in uniqueWeek and isoDate.year == tahun:
                     uniqueWeek.append(isoDate.week)
 
-        with open(user+'_outcome.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_outcome.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 name = row[0].strip()
@@ -143,7 +143,7 @@ class recap:
         months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
 
         # Membaca data dari income.csv
-        with open(user+'_income.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_income.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:           #untuk setiap baris dalam file
                     date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()    #parsing dari string menjadi date type
@@ -153,7 +153,7 @@ class recap:
                     }
                     income.append(obj)  #push object ke array income
         # Membaca data dari outcome.csv
-        with open(user+'_outcome.csv', 'r') as csvfile:
+        with open('./Storage/'+user+'_outcome.csv', 'r') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:       #untuk setiap baris dalam file
                     date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()

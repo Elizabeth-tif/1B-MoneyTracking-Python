@@ -5,7 +5,7 @@ from tabulate import tabulate
 class History:
     def TransHist(self, user):
         uniqueData = []
-        with open(user+'_transaction.csv', 'r') as readcsv:
+        with open('./Storage/'+user+'_transaction.csv', 'r') as readcsv:
             csvreader = csv.reader(readcsv)
             for row in csvreader:
                 try:
