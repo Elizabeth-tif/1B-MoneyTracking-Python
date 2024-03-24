@@ -134,3 +134,57 @@ class recap:
             endOfWeek = startOfWeek + datetime.timedelta(days = 6)
 
         return startOfWeek.date(), endOfWeek.date()
+    
+    def monthRecap(self, user, tahun):
+        #deklarasi array
+        uniqueMonth = []
+        income = []
+        outcome = []
+        months = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"]
+
+        # Membaca data dari income.csv
+        with open(user+'_income.csv', 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:           #untuk setiap baris dalam file
+                    date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()    #parsing dari string menjadi date type
+                    obj = {
+                        'date' : date_obj,
+                        'amount' : float(row[1])    #parse string to float
+                    }
+                    income.append(obj)  #push object ke array income
+        # Membaca data dari outcome.csv
+        with open(user+'_outcome.csv', 'r') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:       #untuk setiap baris dalam file
+                    date_obj = datetime.datetime.strptime(row[0], '%Y-%m-%d').date()
+                    obj = {
+                        'date' : date_obj,
+                        'amount' : float(row[1])
+                    }
+                    outcome.append(obj)     #push object ke array outcome
+        #sort months
+        uniqueMonth = list(set([item['date'].month for item in income + outcome]))
+        uniqueMonth.sort()
+        # Sort array income dan outcome berdasarkan date
+        income = sorted(income, key=lambda x: x["date"])
+        outcome = sorted(outcome, key=lambda x: x["date"])
+
+         # Assemble data dari array unique months, income, dan outcome
+        recap_data = []
+        for month in uniqueMonth:
+            income_amount = sum([item['amount'] for item in income if item['date'].month == month])
+            outcome_amount = sum([item['amount'] for item in outcome if item['date'].month == month])
+            total_amount = income_amount - outcome_amount
+            recap_data.append({'month': months[month-1], 'income': income_amount, 'outcome': outcome_amount, 'total': total_amount})
+
+        #rekap bulanan
+        print("\nRekap Bulanan Tahun",tahun)
+        # Cek apabila recap_data kosong
+        if not recap_data:
+            # Print pesan bahwa tidak ada transaksi apabila kosong
+            message_table = tabulate([["Tidak ada data transaksi pada tahun ini"]], tablefmt="pretty")
+            print(message_table)
+        else:
+            # mengkonversi recap_data menjadi format table dengan tabulate
+            table = tabulate(recap_data, headers="keys", tablefmt="pretty")
+            print(table) 
