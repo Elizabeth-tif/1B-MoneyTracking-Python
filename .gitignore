@@ -1,4 +1,4 @@
-# ignore ALL .log files
+# ignore ALL .csv files
 *.csv
 
 # ignore ALL files in ANY directory named pycache
