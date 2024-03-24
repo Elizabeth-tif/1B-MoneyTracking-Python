@@ -16,13 +16,13 @@ class SaveBnT:
         self.save_to_file()
 
     def save_to_file(self):
-        with open(self.file_name, 'w') as file:
+        with open('./Storage/'+self.file_name, 'w') as file:
             csv_line = ','.join(map(str, self.data))
             file.write(csv_line)
 
     def loadData(self, user):
         try:
-            with open(user + '_budget_target.csv', 'r') as file:
+            with open('./Storage/'+user + '_budget_target.csv', 'r') as file:
                 data = file.read()
                 data = data.split(',')
                 loaded_data = [float(value) for value in data]  
@@ -31,7 +31,7 @@ class SaveBnT:
             self.saveToFile(user)
             return [0.0] * 8 
     def saveToFile(self, user):
-        with open(self.file_name, 'w') as file:
+        with open('./Storage/'+self.file_name, 'w') as file:
             default_data = ','.join('0.0' for _ in range(8))  
             file.write(default_data)
     
@@ -154,7 +154,7 @@ class MonthTransaction:
         start_date = datetime.date(current_date.year, current_date.month, 1)
         end_date = datetime.date(current_date.year, current_date.month, calendar.monthrange(current_date.year, current_date.month)[1])
 
-        with open(user + '_transaction.csv', 'r') as readcsv:
+        with open('./Storage/'+user + '_transaction.csv', 'r') as readcsv:
             csvreader = csv.reader(readcsv)
             for row_number, row in enumerate(csvreader, start=1):
                 try:
@@ -192,7 +192,7 @@ class YearTransaction:
         start_date = datetime.date(current_date.year, 1, 1)
         end_date = datetime.date(current_date.year, 12, calendar.monthrange(current_date.year, 12)[1])
 
-        with open(user + '_transaction.csv', 'r') as readcsv:
+        with open('./Storage/'+user + '_transaction.csv', 'r') as readcsv:
             csvreader = csv.reader(readcsv)
             for row_number, row in enumerate(csvreader, start=1):
                 try:

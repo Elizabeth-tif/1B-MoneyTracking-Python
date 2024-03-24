@@ -1,5 +1,5 @@
 import datetime
-import selectFile
+import Features.selectFile as selectFile
 import importlib
 import subprocess
 
@@ -48,14 +48,14 @@ class MoneyTracker:
     def saveToFile(self, object, user):
         transaction = object
         #append transaction ke file transaction.csv
-        with open(user+"_transaction.csv","a") as file:
+        with open('./Storage/'+user+"_transaction.csv","a") as file:
             file.write(f"{transaction['type']},{transaction['date']},{transaction['amount']},{transaction['category']},{transaction['notes']}\n")
 
         #Variable untuk mengecek apakah suatu date sudah ada di income.csv atau outcome.csv
         exists = False
         # menggunakan try-except untuk handle error jika file tidak ditemukan
         try:
-            with open(user+"_income.csv" if transaction['type'] == 'Income' else user+"_outcome.csv", "r+") as file:
+            with open('./Storage/'+user+"_income.csv" if transaction['type'] == 'Income' else "./Storage/"+user+"_outcome.csv", "r+") as file:
                 lines = file.readlines()
                 file.seek(0)
                 for line in lines:
@@ -72,7 +72,7 @@ class MoneyTracker:
 
         # Jika transaksi dengan date sama tidak ditemukan, maka append ke file income/outcome
         if not exists:
-            with open(user+"_income.csv" if transaction['type'] == 'Income' else user+"_outcome.csv", "a") as file:
+            with open('./Storage/'+user+"_income.csv" if transaction['type'] == 'Income' else "./Storage/"+user+"_outcome.csv", "a") as file:
                 file.write(f"{transaction['date']},{transaction['amount']}\n")
 
     # Fungsi dibawah ini untuk memilih kategori untuk outcome 
@@ -130,9 +130,9 @@ class MoneyTracker:
             print("No file selected.")
     #function untuk make sure membuat file agar menghindari error di beberapa function/prosedur lain
     def createFile(self, user):
-        with open(user+'_income.csv','a') as file:
+        with open('./Storage/'+user+'_income.csv','a') as file:
             pass
-        with open(user+'_outcome.csv','a') as file:
+        with open('./Storage/'+user+'_outcome.csv','a') as file:
             pass
-        with open(user+'_transaction.csv','a') as file:
+        with open('./Storage/'+user+'_transaction.csv','a') as file:
             pass

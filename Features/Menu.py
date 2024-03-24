@@ -1,11 +1,11 @@
 import os
-from Auth import *
-import Balances
-import Recap_UI
-import TransactionHistory_UI
+from Features.Auth import *
+import Features.Balances as Balances
+import UI.Recap_UI as Recap_UI
+import UI.TransactionHistory_UI as TransactionHistory_UI
 import os
-import goal
-import inputData
+import Features.goal as goal
+import Features.inputData as inputData
 
 auth = Auth()
 
@@ -46,7 +46,7 @@ class Menu:
                 root.update()
             elif option == '6':
                 name=auth.login(False,False)
-                self.showMenu(name,False)
+                self.showMenu(name,False,root)
             elif option == '7':
                 exit()
                 break

@@ -1,4 +1,4 @@
-import TransactionHistory
+import Features.TransactionHistory as TransactionHistory
 import os
 
 history = TransactionHistory.History()
