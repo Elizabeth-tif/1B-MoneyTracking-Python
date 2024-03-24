@@ -136,11 +136,11 @@ class Balances:
             print('!! Your input is not valid. Please try again. !!\n')
 
         print("Your Balance\t\t\t: Rp. "+ self.getCurrentBalance(username))
-        print("Your Expanses (this Month)\t: -Rp. "+ self.getThisMonthOutcome(username))
-        print("Your Expanses (last Month)\t: -Rp. "+ self.getLastMonthOutcome(username))
+        print("Your Expenses (this Month)\t: -Rp. "+ self.getThisMonthOutcome(username))
+        print("Your Expenses (last Month)\t: -Rp. "+ self.getLastMonthOutcome(username))
         print("Your Income (this Month)\t: +Rp. "+ self.getThisMonthIncome(username))
         print("Your Income (last Month)\t: +Rp. "+ self.getLastMonthIncome(username))
-        print("1. Input Income\n2. Input Expanse\n3. Back")
+        print("1. Input Income\n2. Input Expense\n3. Back")
         print("====================================================================")
         option = input("Your Input :")
         if (option=='1'):
@@ -148,7 +148,7 @@ class Balances:
         elif(option=='2'):
             self.showInputExpanse(False,username)
         elif(option=='3'):
-            menu.showMenu(username,False)
+            return
         else:
             self.showBalancesMenu(True,username)
     
@@ -156,7 +156,7 @@ class Balances:
         tracker = inputData.MoneyTracker()
         os.system('cls' if os.name == 'nt' else 'clear')
         print("======================== MONEY TRACKING APP ========================")
-        print("========================== INPUT EXPANSE ===========================")
+        print("========================== INPUT EXPENSE ===========================")
         if errorInput:
             print('!! Your input is not valid. Please try again. !!\n')
         amount = float(input("Enter income amount: "))

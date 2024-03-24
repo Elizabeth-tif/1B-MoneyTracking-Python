@@ -38,7 +38,7 @@ class Menu:
                 TransactionHistory_UI.histori(username)
             elif option == '4':
                 budget_tracker = goal.BudgetTracker(username)
-                budget_tracker.start_budget_tracker()
+                budget_tracker.start_budget_tracker(username)
             elif option == '5':
                 root.deiconify()
                 tracker.updateTransaction(username)  # Call the function from inputData.py
