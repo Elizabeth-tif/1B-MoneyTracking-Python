@@ -10,7 +10,7 @@ def balancesUi(eCond,inUser):
     incomeLastM ="Rp."+ "0" +",00" #"0" diisi oleh data yang sudah ada di file, jika belum ada, defult valuenya = 0
     print("Your Balance\t\t\t:"+balance)
     print("Your Expenses (this Month)\t:"+expansesThisM)
-    print("Your Expenses (lasr Month)\t:"+expansesLastM)
+    print("Your Expenses (last Month)\t:"+expansesLastM)
     print("Your Income (this Month)\t:"+incomeThisM)
     print("Your Income (last Month)\t:"+incomeLastM)
     print("====================================================================")

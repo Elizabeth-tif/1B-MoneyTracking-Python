@@ -136,8 +136,8 @@ class Balances:
             print('!! Your input is not valid. Please try again. !!\n')
 
         print("Your Balance\t\t\t: Rp. "+ self.getCurrentBalance(username))
-        print("Your Expanses (this Month)\t: -Rp. "+ self.getThisMonthOutcome(username))
-        print("Your Expanses (last Month)\t: -Rp. "+ self.getLastMonthOutcome(username))
+        print("Your Expenses (this Month)\t: -Rp. "+ self.getThisMonthOutcome(username))
+        print("Your Expenses (last Month)\t: -Rp. "+ self.getLastMonthOutcome(username))
         print("Your Income (this Month)\t: +Rp. "+ self.getThisMonthIncome(username))
         print("Your Income (last Month)\t: +Rp. "+ self.getLastMonthIncome(username))
         print("1. Input Income\n2. Input Expense\n3. Back")
@@ -148,7 +148,7 @@ class Balances:
         elif(option=='2'):
             self.showInputExpanse(False,username)
         elif(option=='3'):
-            menu.showMenu(username,False)
+            return
         else:
             self.showBalancesMenu(True,username)
     
